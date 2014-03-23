@@ -81,7 +81,6 @@ public class ThreeStateButton extends SeekBar {
         ViewConfiguration vc = ViewConfiguration.get(context);
         mTouchSlop = vc.getScaledTouchSlop();
 
-
         mCounter = getFormattedString(0);
         mCounterPaddingBottom = 10;
         isCounting = false;
@@ -99,7 +98,6 @@ public class ThreeStateButton extends SeekBar {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-
 
         switch (action) {
             case MotionEvent.ACTION_UP:
@@ -137,39 +135,17 @@ public class ThreeStateButton extends SeekBar {
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {
-
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStrokeWidth(4);
-        paint.setTextSize(70);
-        paint.setAntiAlias(true);
-
-        int halfThumb = getThumbOffset();
-
-        //canvas.drawLine(0+halfThumb, 0 , 0+halfThumb, getHeight(), paint);
-        // canvas.drawLine(getWidth()/2, 0, getWidth()/2, (float)getHeight(), paint);
-        //canvas.drawLine(getWidth() - halfThumb, 0, getWidth() - halfThumb, getHeight(), paint);
         canvas.drawText(mCounter, getWidth() / 2 - (mPaintCounter.measureText(mCounter) / 2), getHeight() - mCounterPaddingBottom, mPaintCounter);
-
         getProgressDrawable().setBounds(0, 0, getProgressDrawable().getBounds().right, getSeekBarThumb().getBounds().height() / 4 * 3);
         super.onDraw(canvas);
-
-
     }
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         Rect bounds = new Rect();
         mPaintCounter.getTextBounds("0", 0, 1, bounds);
         setMeasuredDimension(getMeasuredWidth(), getMeasuredHeight() + bounds.height() + mCounterPaddingBottom * 2);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
     }
 
     private State getStateByProgress(int progress) {
